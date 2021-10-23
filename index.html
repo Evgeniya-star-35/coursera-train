@@ -1,38 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Displaying Images</title>
+    <meta charset="UTF-8" />
+    <title>ToDo</title>
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        font-family: Calibri;
+        color: white;
+      }
+
+      .todo {
+        height: 100%;
+        overflow-x: auto;
+        background: darkslateblue;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .todo .todo-canvas {
+        margin: 1rem;
+        width: 300px;
+      }
+
+      .todo .todo-list {
+        background: slateblue;
+        border-radius: 5px;
+        padding: 1rem;
+      }
+
+      .todo .todo-header {
+        padding: 1rem;
+        display: flex;
+        align-items: end;
+      }
+
+      .todo .todo-button {
+        cursor: pointer;
+
+        color: white;
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+        border-radius: 50%;
+        border: 0;
+        -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.75);
+      }
+
+      .todo .todo-button:hover {
+        -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+      }
+
+      .todo .todo-button.todo-button-add {
+        background: blue;
+      }
+
+      .todo .todo-button.todo-button-add:hover {
+        background: mediumblue;
+      }
+
+      .todo .todo-button.todo-button-delete {
+        width: 25px;
+        height: 25px;
+        background: red;
+        font-size: 1rem;
+      }
+
+      .todo .todo-button.todo-button-delete:hover {
+        background: darkred;
+      }
+
+      .todo .todo-card {
+        display: flex;
+        flex-direction: column;
+
+        padding: 1rem;
+        margin: 1rem 0;
+
+        border-radius: 5px;
+        -webkit-box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.75);
+      }
+
+      .todo .todo-card .label,
+      .todo .todo-card .save {
+        width: 100%;
+      }
+
+      .todo .todo-card .label,
+      .todo .todo-card .content,
+      .todo .todo-card .save {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+        padding: 0.25rem 0;
+      }
+    </style>
   </head>
   <body>
-    <!-- <h1>Don't be afraid to be &lt;then a 100% success:</h1>
-    <p>
-      <img
-        src="https://cdnimg.rg.ru/img/content/137/25/33/1000_d_850.jpg"
-        width="400"
-        height="235"
-        alt="Picture of Theodore Roosevelt"
-      />
-      &quot;It is not the critic who counts; not the man who points out how the
-      strong man stumbles, or where the doer of deeds could have done them
-      better. The credit belongs to the man who is actually in the arena, whose
-      face is marred by dust and sweat and blood; who strives valiantly; who
-      errs, who comes short again and again, because there is no effort without
-      error and shortcoming; but who does actually strive to do the deeds; who
-      knows great enthusiasms, the great devotions; who spends himself in a
-      worthy cause; who at the best knows in the end the triumph of high
-      achievement, and who at the worst, if he fails, at least fails while
-      daring greatly, so that his place shall never be with those cold and timid
-      souls who neither know victory nor defeat.&quot;
-    </p>
-    <p>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/%D0%A2%D1%80%D0%B0%D0%B2%D0%B0_%282015%29.JPG/300px-%D0%A2%D1%80%D0%B0%D0%B2%D0%B0_%282015%29.JPG"
-        width="640"
-        height="480"
-      />
-    </p>
-    <p>Theodore Roosevelt 1910 &copy; Copyright</p> -->
-    <script src="./index.js"></script>
+    <div class="todo">
+      <div class="todo-canvas">
+        <div class="todo-header">
+          <button class="todo-button todo-button-add" id="todo-button-add">
+            +
+          </button>
+        </div>
+        <div class="todo-list">
+          <div class="todo-card" id="card-1">
+            <label class="label">Content</label>
+            <input class="content" type="text" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const refs = {
+        button: document.querySelector("#todo-button-add"),
+        listTodo: document.querySelector(".todo-list"),
+        cardTodo: document.querySelector(".todo-card"),
+        labelTodo: document.querySelector(".label"),
+        inputTodo: document.querySelector(".content"),
+      };
+      function submitHandler(e) {
+        e.preventDefault();
+        const value = refs.inputTodo.value;
+        refs.ul.insertAdjacentHTML("beforeend", createLi(value));
+        const array = JSON.parse(localStorage.getItem("list"));
+        const arrayForStorage = array ? array : [];
+        arrayForStorage.push(value);
+        localStorage.setItem("list", JSON.stringify(arrayForStorage));
+        refs.input.value = "";
+      }
+      const createLi = (text) => `<li>${text}</li>`;
+    </script>
+    <script src="./class.js"></script>
   </body>
 </html>
