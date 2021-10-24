@@ -129,48 +129,53 @@
       const refs = {
         button: document.querySelector("#todo-button-add"),
         listTodo: document.querySelector(".todo"),
-        cardTodo: document.querySelector(".todo-card"),
-        labelTodo: document.querySelector(".label"),
         inputTodo: document.querySelector(".content"),
-        // closeBtn: document.querySelector(".delete"),
       };
-      let id = 0;
-      const createLi = (
-        text
-      ) => `<li class="text" id="task-${++id}"><span>${text}</span><button type="button" class="done" aria-label="Done"> ✔ 
-    </button>
-    <button type="button" class="delete" aria-label="Delete"> ❌ 
-    </button></li>`;
-      refs.button.addEventListener("click", submitHandler);
-      function submitHandler(e) {
-        e.preventDefault();
 
-        const value = refs.inputTodo.value;
-        if (value === "") {
-          alert("Enter the name of the task");
-          return;
-        }
-        refs.listTodo.insertAdjacentHTML("beforeend", createLi(value));
-        const array = JSON.parse(localStorage.getItem("list"));
-        const arrayForStorage = array ? array : [];
-        arrayForStorage.push(value);
-        localStorage.setItem("list", JSON.stringify(arrayForStorage));
-        refs.inputTodo.value = "";
-      }
-      function createTask(text) {
-        listTodo.insertAdjacentHTML("beforeend", createLi(text));
+      let id = 0;
+
+      const getTask = (text) => `
+          <li id="task-${++id}"">
+          <span>${text}</span>
+          <button type="button" class="done" aria-label="Done">
+              ✔
+          </button>
+          <button type="button" class="delete" aria-label="Delete">
+              ❌
+          </button>
+          </li>
+      `;
+
+      const createTask = (text) => {
+        refs.listTodo.insertAdjacentHTML("beforeend", getTask(text));
 
         const task = refs.listTodo.querySelector(`#task-${id}`);
         task.querySelector(".delete").addEventListener("click", (e) => {
           task.remove();
         });
+
         const done = task.querySelector(".done");
-        const doneEvent = () => {
+        const doneTask = () => {
           task.style.background = "yellow";
-          done.removeEventListener("click", doneEvent);
+          done.removeEventListener("click", doneTask);
         };
-        done.addEventListener("click", doneEvent);
-      }
+        done.addEventListener("click", doneTask);
+      };
+
+      refs.button.addEventListener("click", () => {
+        const text = refs.inputTodo.value;
+        if (text === "") {
+          alert("Enter the name of the task");
+          return;
+        }
+        refs.inputTodo.value = "";
+
+        createTask(text);
+        const array = JSON.parse(localStorage.getItem("list"));
+        const arrayForStorage = array ? array : [];
+        arrayForStorage.push(text);
+        localStorage.setItem("list", JSON.stringify(arrayForStorage));
+      });
     </script>
   </body>
 </html>
