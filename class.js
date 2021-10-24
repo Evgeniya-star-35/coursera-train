@@ -54,6 +54,7 @@ class Record extends Service {
   getType() {
     return this.type;
   }
+  //  pipe(SubmitForApproval, Approve, Reject)({});
 }
 
 const recordType = "Vacancy";
@@ -65,3 +66,4 @@ softwareEngineerVacancy.Approve();
 
 frontEndEngineerVacancy.SubmitForApproval();
 frontEndEngineerVacancy.Reject();
+// pipe(SubmitForApproval, Approve, Reject)();
