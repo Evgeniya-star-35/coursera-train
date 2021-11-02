@@ -62,3 +62,9 @@ refs.button.addEventListener("click", () => {
 date.forEach((item) => {
   createTask(item);
 });
+
+let foo = [1, "go", { x: 2 }, { y: 5 }];
+for (let i = 0; i < foo.length; i++) {
+  if (foo[i] === "go") foo.splice(i, 1);
+  else console.log(foo[i]);
+}
